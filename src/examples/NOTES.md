@@ -11,9 +11,26 @@ The last function template (```std::bind_front```) was introduced in C++20.
 template < class Fn >
 class binder1st : public std::unary_function<typename Fn::second_argument_type,
                                              typename Fn::result_type> {
+protected:
+    Fn op;
+    typename Fn::first_argument_type value;
 
-}
+public:
+    binder1st(const Fn& fn,
+              const typename Fn::first_argument_type& value);
 
+    typename Fn::result_type
+        operator()(const typename Fn::second_argument_type& x) const;
+
+    typename Fn::result_type
+        operator()(typename Fn::second_argument_type& x) const;   
+};
+
+template < class Fn >
+class binder2nd : public unary_function<typename Fn::first_argument_type,
+                                        typename Fn::result_type> {
+
+};
 ```
 
 
