@@ -7,7 +7,14 @@ The last function template (```std::bind_front```) was introduced in C++20.
 
 1. ```std::binder1st``` and ```std::binder2nd```
 
+```cpp
+template < class Fn >
+class binder1st : public std::unary_function<typename Fn::second_argument_type,
+                                             typename Fn::result_type> {
 
+}
+
+```
 
 
 
