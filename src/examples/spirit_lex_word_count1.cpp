@@ -19,7 +19,20 @@ enum token_ids
 };
 //]
 
-
+//[wcf_token_definition
+/* the template `word_count_tokens` defines three different tokens:
+   `ID_WORD`, `ID_EOL`, and `ID_CHAR`, representing a word (anything
+   except a whitespace or a newline), a newline character, and any
+   other character (`ID_WORD`, `ID_EOL`, and `ID_CHAR` are enum values
+   representing the token ids, but could be anything else convertible
+   to an integer as well).
+   The direct base class of any token definition class needs to be the
+   template `lex::lexer<>`, where the corresponding template parameter 
+   ( here: `lex:lexertl::lexer<BaseIterator>`) defines which 
+   underlying lexer engine has to be used to provide the required state
+   machine functionality. In this example we use the Lexertl based 
+  lexer engine as the underlying lexer type. 
+ */ 
 template <typename Lexer>
 struct word_count_tokens : lex::lexer<Lexer>
 {
@@ -35,7 +48,13 @@ struct word_count_tokens : lex::lexer<Lexer>
     }
 
 };
+//]
 
+//[wcf_functor
+/* in this example the struct `counter` is used as a functor counting the 
+   characters, words, and lines in the analyzed input sequence by identifying
+   the matched tokens as passed from the /Spirit.Lex/ library.
+ */
 struct counter
 {
    //<- this is an implementation detail specific to boost::bind and doesn't show 
@@ -67,7 +86,7 @@ struct counter
    }
 
 };
-
+//]
 
 int main(int argc, char* argv[]) 
 {
