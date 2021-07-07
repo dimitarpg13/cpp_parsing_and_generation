@@ -75,14 +75,21 @@ std::binder1st<F> bind1st( const F& f, const T& x );
 binds the first argument of ```f``` to ```x```. Effectivelly calls
 
 ```cpp
+
 std::binder1st<F>(f, typename F::first_argument_type(x))
-```.
+
+```
+.
+
 
 ```cpp
 template< class F, class T >
 std::binder2nd<F> bind2nd( const F& f, const T& x );
 ```
 binds the second argument of ```f``` to ```x```. Effectively calls 
+
 ```cpp
+
 std::binder2nd<F>(f, typename F::second_argument_type(x))
+
 ```.
