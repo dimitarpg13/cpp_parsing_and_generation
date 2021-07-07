@@ -79,7 +79,7 @@ binds the first argument of ```f``` to ```x```. Effectivelly calls
 std::binder1st<F>(f, typename F::first_argument_type(x))
 
 ```
-.
+
 
 
 ```cpp
@@ -92,4 +92,4 @@ binds the second argument of ```f``` to ```x```. Effectively calls
 
 std::binder2nd<F>(f, typename F::second_argument_type(x))
 
-```.
+```
