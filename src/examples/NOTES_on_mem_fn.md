@@ -4,6 +4,48 @@ Notes on ```std::mem_fun_t```, ```std::mem_fun1_t```, ```std::const_mem_fun_t```
 
 The first six function templates were introduced in C++ 11 and were removed in C++ 17.
 
+```std::mem_fun_t```, ```std::mem_fun1_t```, ```std::const_mem_fun_t```, ```std::const_mem_fun1_t```
+wrapper around a member function pointer. The class instance whose member function to
+call is passed as a pointer to the operator. 
+```cpp
+template< class S, class T > 
+class mem_fun_ : public unary_function<T*, S> {
+public:
+   explicit mem_fun_t(S (T::*p)());
+   S operator()(T* p) const;
+};
+```
+wraps a non-const member function with no parameters.
+
+```cpp
+template< class S, class T >
+class const_mem_fun_t : public unary_function<const T*,S> {
+public:
+   explicit const_mem_fun_t(S (T::*p)() const);
+   S operator()(const T* p) const;
+};
+```
+wraps a const member function with no parameters.
+
+```cpp
+template< class S, class T, class A >
+class mem_fun1_t : public binary_function<T*,A,S> {
+public:
+   explicit mem_fun1_t(S (T::*p)(A));
+   S operator()(T* p, A x) const;
+}
+```
+wraps a non-const member function with a single parameter.
+
+```cpp
+template< class S, class T, class A >
+class const_mem_fun1_t : public binary_function<const T*,A,S> {
+public:
+   ex
+}
+```
+
+
 ```std::mem_fun```
 creates a member function wrapper object, deducing the target type from the template
 arguments. The wrapper object expects a pointer to an object of type T as the first
