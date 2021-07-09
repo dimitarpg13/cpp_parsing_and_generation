@@ -171,6 +171,62 @@ struct F
 F f;
 int x = 104;
 boost::bind<int>(f, _1, _1)(x);  // f(x, x) i.e. zero
+```
+
+Some compilers have trouble with the ```bind<R>(f, ...)``` syntax. For portability reasons, an alternative
+to express the above is supported:
+```cpp
+boost::bind(boost::type<int>(), f, _1, _1)(x);
 ``` 
+Note, however, that the alternative syntax is provided only as a workaround. It is not part of the interface.
+When the function object exposes a nested type named ```result_type```, the explicit return type can be 
+omitted:
+
+```cpp
+int x = 8;
+boost::bind(std::less<int>(), _1, 9) (x);  // x < 9
+```
+_[Note: the ability to omit the return type is not available on all compilers.]_
+
+By default, ```boost::bind``` makes a copy of the provided function object. ```boost::ref``` and ```boost::cref```
+can be used to make it store a reference to the function object, rather than a copy. This can be useful when
+the function object is non-copyable, expensive to copy, or contains state; of course in this case the
+programmer is expected to ensure that the function object is not destroyed while it's still being used.
+
+```cpp
+struct F2
+{
+   int s;
+
+   typedef void result_type;
+   void operator()(int x) { s += x; }
+};
+
+F2 f2 = { 0 };
+int a[] = { 1, 2, 3 };
+
+std::for_each(a, a+3, boost::bind(ref(f2), _1));
+
+assert(f2.s == 6);
+```
+
+Using ```boost::bind``` with pointers to members
+
+Pointers to member functions and pointers to data members are not function objects, because they do 
+not support ```operator()```. For convenience, ```boost::bind``` accepts member pointers as its
+first argument, and the behavior is as if ```boost::mem_fn``` has been used to convert the member
+pointer into a function object. In other words, the expression
+```cpp
+boost::bind(&x::f, args)
+```
+is equivalent to 
+```cpp
+boost::bind<R>(mem_fn(&X::f), args)
+```
+where ```R``` is the return type of ```X::f``` (for member functions) or the type of the member
+(for data members).
+
+
+
 
 
