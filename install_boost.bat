@@ -2,7 +2,7 @@
 
 echo cloning, updating, compiling and installing boost from source..
 
-git submodule init
+git submodule init --recursive
 git submodule update --recursive
 cd boost
 bootstrap
