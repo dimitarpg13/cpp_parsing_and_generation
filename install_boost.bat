@@ -7,5 +7,5 @@ git submodule update --recursive
 cd boost
 git submodule init
 git submodule update --recursive
-.\bootstrap
+call .\bootstrap
 .\b2 install --prefix=..\install
