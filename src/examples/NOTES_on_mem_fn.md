@@ -41,9 +41,10 @@ wraps a non-const member function with a single parameter.
 template< class S, class T, class A >
 class const_mem_fun1_t : public binary_function<const T*,A,S> {
 public:
-   ex
+   explicit const_mem_fun1_t(S 
 }
 ```
+#TODO: finish this
 
 
 ```std::mem_fun```
